@@ -1,7 +1,7 @@
 import fileApp from './fileApp';
 import fileDos from './fileDos';
 import fileImage from './fileImage';
-import fileMdx from './fileMdx';
+import fileMdx from './fileMDX';
 import fileRichText from './fileRichText';
 import folder from './folder';
 
