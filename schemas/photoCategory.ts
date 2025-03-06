@@ -12,12 +12,6 @@ export default defineType({
       validation: (rule) => rule.required(),
     },
     {
-      name: 'thumbnail',
-      title: 'Thumbnail',
-      type: 'reference',
-      to: [{ type: 'fileImage' }],
-    },
-    {
       name: 'collections',
       title: 'Collections',
       type: 'array',
