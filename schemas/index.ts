@@ -6,6 +6,8 @@ import fileMdx from './fileMDX';
 import fileRichText from './fileRichText';
 import folder from './folder';
 import project from './project';
+import photoCategory from './photoCategory';
+import photoCollection from './photoCollection';
 
 export const schemaTypes = [
   article,
@@ -15,5 +17,7 @@ export const schemaTypes = [
   fileApp,
   fileDos,
   fileMdx,
+  photoCategory,
+  photoCollection,
   project,
 ];
