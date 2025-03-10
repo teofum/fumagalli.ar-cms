@@ -8,6 +8,7 @@ import folder from './folder';
 import project from './project';
 import photoCategory from './photoCategory';
 import photoCollection from './photoCollection';
+import projectCategory from './projectCategory';
 
 export const schemaTypes = [
   folder,
@@ -17,7 +18,8 @@ export const schemaTypes = [
   fileApp,
   fileDos,
   article,
-  photoCategory,
   photoCollection,
+  photoCategory,
   project,
+  projectCategory,
 ];
