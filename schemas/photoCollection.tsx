@@ -1,11 +1,13 @@
 import { defineType, ObjectInputProps, set, useClient } from 'sanity';
 import { Button, Text, TextInput } from '@sanity/ui';
 import { useRef } from 'react';
+import { PiImages } from 'react-icons/pi';
 
 export default defineType({
   type: 'document',
   name: 'photoCollection',
   title: 'Photo Collection',
+  icon: PiImages,
   fields: [
     {
       name: 'title',
@@ -88,14 +90,13 @@ export default defineType({
     select: {
       title: 'title',
       photos: 'photos',
-      thumbnail: 'thumbnail.content',
+      media: 'thumbnail.content',
     },
-    prepare({ title, photos, thumbnail }: any) {
-      console.log(thumbnail);
+    prepare({ title, photos, media }: any) {
       return {
         title,
-        subtitle: `${photos.length} photo${photos.length !== 1 ? 's' : ''}`,
-        media: thumbnail,
+        subtitle: photos ? `${photos.length} photo${photos.length !== 1 ? 's' : ''}` : 'Empty',
+        media,
       };
     },
   },

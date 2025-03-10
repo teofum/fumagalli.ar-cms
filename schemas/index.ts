@@ -10,13 +10,13 @@ import photoCategory from './photoCategory';
 import photoCollection from './photoCollection';
 
 export const schemaTypes = [
-  article,
   folder,
   fileImage,
   fileRichText,
+  fileMdx,
   fileApp,
   fileDos,
-  fileMdx,
+  article,
   photoCategory,
   photoCollection,
   project,

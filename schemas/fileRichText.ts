@@ -1,9 +1,11 @@
 import { defineType } from 'sanity';
+import { PiFileText } from 'react-icons/pi';
 
 export default defineType({
   type: 'document',
   name: 'fileRichText',
   title: 'Rich Text File',
+  icon: PiFileText,
   fields: [
     {
       type: 'string',
@@ -31,9 +33,24 @@ export default defineType({
           type: 'image',
         },
         {
-          type: 'code'
-        }
+          type: 'code',
+        },
       ],
     },
   ],
+  preview: {
+    select: {
+      title: 'name',
+      content: 'content',
+    },
+    prepare({ title, content }: any) {
+      const image = content.filter((block: any) => block._type === 'image').at(0);
+
+      return {
+        title,
+        subtitle: 'Rich Text File',
+        media: image,
+      };
+    },
+  },
 });

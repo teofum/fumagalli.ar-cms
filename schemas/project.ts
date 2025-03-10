@@ -1,9 +1,11 @@
 import { defineType } from 'sanity';
+import { PiRocketLaunch } from 'react-icons/pi';
 
 export default defineType({
   type: 'document',
   name: 'project',
   title: 'Project',
+  icon: PiRocketLaunch,
   fields: [
     {
       type: 'string',

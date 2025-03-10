@@ -1,4 +1,6 @@
 import { defineType } from 'sanity';
+import { PiFolder } from 'react-icons/pi';
+import { sanityImage } from '../utils/sanity.image';
 
 const anyFile = [
   {
@@ -22,6 +24,7 @@ export default defineType({
   type: 'document',
   name: 'folder',
   title: 'Folder',
+  icon: PiFolder,
   fields: [
     {
       type: 'string',
@@ -69,12 +72,26 @@ export default defineType({
   preview: {
     select: {
       title: 'name',
-      media: 'icon.icon32',
+      icon: 'icon.icon16',
+      items: 'items',
     },
-    prepare: ({ title, media }) => ({
-      title,
-      media,
-      subtitle: 'Folder',
-    }),
+    prepare: ({ title, icon, items }) => {
+      const itemsText = items ? `${items.length} item${items.length === 1 ? '' : 's'}` : 'Empty';
+      return {
+        title,
+        subtitle: `Folder – ${itemsText}`,
+        media: icon ? (
+          <img src={sanityImage(icon).format('png').width(16).url()}
+               alt={title}
+               width={16}
+               height={16}
+               style={{
+                 margin: '8px',
+                 width: 16,
+                 height: 16,
+                 imageRendering: 'pixelated',
+               }} />) : null,
+      };
+    },
   },
 });

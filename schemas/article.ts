@@ -1,9 +1,11 @@
 import { defineType } from 'sanity';
+import { PiArticle } from 'react-icons/pi';
 
 export default defineType({
   type: 'document',
   name: 'article',
   title: 'Article',
+  icon: PiArticle,
   fields: [
     {
       type: 'string',
