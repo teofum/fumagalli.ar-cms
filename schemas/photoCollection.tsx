@@ -93,7 +93,12 @@ export default defineType({
         subtitle: photos
           ? `${photos.length} photo${photos.length !== 1 ? 's' : ''}`
           : filters
-            ? `${filters.length} filter${filters.length !== 1 ? 's' : ''}`
+            ? filters
+                .map(
+                  (f: { tag: string; values: string[] }) =>
+                    `${f.tag}: ${f.values.join(',')}`,
+                )
+                .join(';')
             : 'Empty',
         media,
       };
