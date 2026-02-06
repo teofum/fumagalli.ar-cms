@@ -1,7 +1,7 @@
 import { defineType, ObjectInputProps, set, useClient } from 'sanity';
 import { Button, Text, TextInput } from '@sanity/ui';
 import { useRef } from 'react';
-import { PiImages } from 'react-icons/pi';
+import { PiImages, PiTag } from 'react-icons/pi';
 
 export default defineType({
   type: 'document',
@@ -25,77 +25,76 @@ export default defineType({
     {
       name: 'thumbnail',
       title: 'Thumbnail',
-      type: 'reference',
-      to: [{ type: 'fileImage' }],
+      type: 'image',
+    },
+    {
+      name: 'type',
+      title: 'Type',
+      type: 'string',
+      validation: (rule) => rule.required(),
+      options: {
+        list: [
+          { title: 'Photos', value: 'photos' },
+          { title: 'Filters', value: 'filters' },
+        ],
+      },
     },
     {
       name: 'photos',
       title: 'Photos',
       type: 'array',
+      of: [{ type: 'image' }],
+      hidden: ({ document }) => document?.type !== 'photos',
+    },
+    {
+      name: 'filters',
+      title: 'Filters',
+      type: 'array',
       of: [
         {
-          type: 'reference',
-          to: [{ type: 'fileImage' }],
+          type: 'object',
+          fields: [
+            { name: 'tag', title: 'Tag', type: 'string' },
+            {
+              name: 'values',
+              title: 'Values',
+              type: 'array',
+              of: [{ type: 'string' }],
+            },
+          ],
+          preview: {
+            select: {
+              tag: 'tag',
+              values: 'values',
+            },
+            prepare({ tag, values }) {
+              return {
+                title: tag,
+                subtitle: values.join(', '),
+                icon: PiTag,
+              };
+            },
+          },
         },
       ],
-      validation: (rule) => rule.required(),
-      components: {
-        input: (props: ObjectInputProps<any>) => {
-          const id = useRef<string>('');
-          const client = useClient();
-
-          const tryImport = async () => {
-            if (!id.current) return;
-
-            const data = await client.fetch(`
-              *[ _type=="folder" && _id=="${id.current}" ][0]
-                .items[ @->_type=="fileImage" ]
-            `);
-
-            props.onChange(set(data));
-          };
-
-          return (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-              }}
-            >
-              {props.renderDefault(props)}
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '0.5rem',
-                }}
-              >
-                <TextInput
-                  onChange={(ev) => (id.current = ev.currentTarget.value)}
-                  placeholder="Folder ID"
-                />
-                <Button mode="ghost" onClick={tryImport}>
-                  <Text size={1} weight="medium">
-                    Import folder
-                  </Text>
-                </Button>
-              </div>
-            </div>
-          );
-        },
-      },
+      hidden: ({ document }) => document?.type !== 'filters',
     },
   ],
   preview: {
     select: {
       title: 'title',
       photos: 'photos',
-      media: 'thumbnail.content',
+      filters: 'filters',
+      media: 'thumbnail',
     },
-    prepare({ title, photos, media }: any) {
+    prepare({ title, photos, filters, media }) {
       return {
         title,
-        subtitle: photos ? `${photos.length} photo${photos.length !== 1 ? 's' : ''}` : 'Empty',
+        subtitle: photos
+          ? `${photos.length} photo${photos.length !== 1 ? 's' : ''}`
+          : filters
+            ? `${filters.length} filter${filters.length !== 1 ? 's' : ''}`
+            : 'Empty',
         media,
       };
     },
