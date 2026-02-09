@@ -20,6 +20,18 @@ export default defineType({
       validation: (rule) => rule.required(),
     },
     {
+      name: 'thumbnail',
+      title: 'Thumbnail',
+      type: 'image',
+    },
+    {
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      validation: (rule) => rule.required(),
+    },
+    {
       type: 'reference',
       name: 'file',
       title: 'File',
