@@ -25,6 +25,11 @@ export default defineType({
       type: 'image',
     },
     {
+      type: 'text',
+      name: 'description',
+      title: 'Description',
+    },
+    {
       name: 'tags',
       title: 'Tags',
       type: 'array',
