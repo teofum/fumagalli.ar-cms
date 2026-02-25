@@ -31,6 +31,18 @@ export default defineType({
         },
         {
           type: 'image',
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+            },
+            {
+              name: 'caption',
+              title: 'Caption',
+              type: 'string',
+            },
+          ],
         },
         {
           type: 'code',
@@ -44,7 +56,9 @@ export default defineType({
       content: 'content',
     },
     prepare({ title, content }: any) {
-      const image = content.filter((block: any) => block._type === 'image').at(0);
+      const image = content
+        .filter((block: any) => block._type === 'image')
+        .at(0);
 
       return {
         title,
