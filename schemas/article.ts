@@ -28,6 +28,7 @@ export default defineType({
       type: 'text',
       name: 'description',
       title: 'Description',
+      validation: (rule) => rule.max(120).error('you wrote too much'),
     },
     {
       name: 'tags',
